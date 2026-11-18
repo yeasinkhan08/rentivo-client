@@ -1,4 +1,4 @@
-import AuthForm from "@/components/shared/AuthForm";
+import SignInForm from "@/components/auth/SignInForm";
 
 export const metadata = {
   title: "Sign in — RENTIVO",
@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function SignInPage() {
-  return <AuthForm mode="signin" />;
+  return <SignInForm />;
 }
