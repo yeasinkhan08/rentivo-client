@@ -55,7 +55,7 @@ export default function Hero() {
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-sky-950/20 mix-blend-multiply"
+        className="absolute inset-0 -z-10 bg-sky-950/10 mix-blend-multiply dark:bg-sky-950/20"
       />
       <div
         aria-hidden="true"
@@ -64,7 +64,7 @@ export default function Hero() {
 
       <div className="mx-auto flex min-h-[36rem] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:min-h-[40rem] lg:px-8">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1.5 text-xs font-semibold text-sky-300">
+          <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1.5 text-xs font-semibold text-sky-700 dark:text-sky-300">
             <span className="relative flex size-2">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-sky-400 opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-sky-400" />
@@ -74,7 +74,7 @@ export default function Hero() {
 
           <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl lg:leading-[1.08]">
             Rent the{" "}
-            <span className="bg-linear-to-r from-sky-300 via-cyan-300 to-blue-500 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-sky-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent dark:from-sky-300 dark:via-cyan-300 dark:to-blue-500">
               right equipment
             </span>{" "}
             for every build.
@@ -110,7 +110,7 @@ export default function Hero() {
           <div className="mt-10 grid grid-cols-1 gap-4 border-t border-border/60 pt-6 sm:grid-cols-3">
             {highlights.map(({ icon: Icon, title, description }) => (
               <div key={title} className="flex items-center gap-3">
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-sky-400/20 bg-sky-400/10 text-sky-300">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-sky-400/20 bg-sky-400/10 text-sky-600 dark:text-sky-300">
                   <Icon className="size-4" />
                 </span>
                 <div>

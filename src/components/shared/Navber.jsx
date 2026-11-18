@@ -1,9 +1,10 @@
 "use client";
 
 import { Suspense, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Boxes, Menu, Moon, Sun } from "lucide-react";
+import { ArrowUpRight, Menu, Moon, Sun } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -24,21 +25,30 @@ const navItems = [
   { label: "How it work", href: "/how-it-works" },
 ];
 
-function Logo() {
+function Logo({ className = "h-9" }) {
+  const baseClass = "w-auto object-contain select-none";
+
   return (
-    <span className="flex items-center gap-2.5">
-      <span className="relative flex size-9 items-center justify-center overflow-hidden rounded-xl bg-linear-to-br from-sky-400 via-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-950/40">
-        <Boxes className="size-5" strokeWidth={2.2} />
-        <span className="absolute inset-0 bg-linear-to-tr from-white/25 to-transparent" />
-      </span>
-      <span className="flex flex-col leading-none">
-        <span className="text-lg font-extrabold tracking-tight text-foreground">
-          RENTI<span className="text-sky-400">VO</span>
-        </span>
-        <span className="mt-1 text-[9px] font-semibold tracking-[0.22em] text-muted-foreground">
-          RENT WITH CONFIDENCE
-        </span>
-      </span>
+    <span className="inline-flex shrink-0 items-center">
+      <Image
+        src="/images/logo-light.png"
+        alt="Rentivo"
+        width={246}
+        height={76}
+        loading="eager"
+        fetchPriority="high"
+        className={cn(baseClass, className, "dark:hidden")}
+      />
+      <Image
+        src="/images/logo.png"
+        alt=""
+        aria-hidden="true"
+        width={246}
+        height={76}
+        loading="eager"
+        fetchPriority="high"
+        className={cn(baseClass, className, "hidden dark:block")}
+      />
     </span>
   );
 }
@@ -87,7 +97,7 @@ function ThemeToggle({ className }) {
       onClick={toggleTheme}
       aria-label="Toggle color theme"
       className={cn(
-        "size-9 rounded-lg text-muted-foreground hover:bg-sky-500/10 hover:text-sky-300",
+        "size-9 rounded-lg text-muted-foreground hover:bg-sky-500/10 hover:text-sky-600 dark:hover:text-sky-300",
         className,
       )}
     >
@@ -127,9 +137,9 @@ function HeaderContent() {
                 href={item.href}
                 className={cn(
                   buttonVariants({ variant: "ghost" }),
-                  "relative h-9 rounded-lg px-3 text-sm font-medium text-muted-foreground hover:bg-sky-500/10 hover:text-sky-300",
+                  "relative h-9 rounded-lg px-3 text-sm font-medium text-muted-foreground hover:bg-sky-500/10 hover:text-sky-600 dark:hover:text-sky-300",
                   active &&
-                    "bg-sky-500/10 text-sky-300 after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:rounded-full after:bg-sky-400",
+                    "bg-sky-500/10 text-sky-600 after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:rounded-full after:bg-sky-500 dark:text-sky-300 dark:after:bg-sky-400",
                 )}
               >
                 {item.label}
@@ -145,7 +155,7 @@ function HeaderContent() {
             href="/sign-in"
             className={cn(
               buttonVariants({ variant: "ghost" }),
-              "hidden h-9 rounded-lg px-3 text-sm font-medium text-muted-foreground hover:bg-sky-500/10 hover:text-sky-300 sm:inline-flex",
+              "hidden h-9 rounded-lg px-3 text-sm font-medium text-muted-foreground hover:bg-sky-500/10 hover:text-sky-600 dark:hover:text-sky-300 sm:inline-flex",
             )}
           >
             Login
@@ -178,11 +188,11 @@ function HeaderContent() {
 
             <SheetContent
               side="right"
-              className="w-[min(88vw,22rem)] border-l border-border/70 bg-[#080f20] p-0 text-foreground"
+              className="w-[min(88vw,22rem)] border-l border-border/70 bg-popover p-0 text-popover-foreground"
             >
               <SheetHeader className="border-b border-border/60 p-5 pr-12">
                 <SheetTitle className="text-left">
-                  <Logo />
+                  <Logo className="h-10" />
                 </SheetTitle>
               </SheetHeader>
 
@@ -198,8 +208,8 @@ function HeaderContent() {
                       href={item.href}
                       onClick={() => setSheetOpen(false)}
                       className={cn(
-                        "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition hover:bg-sky-500/10 hover:text-sky-300",
-                        active && "bg-sky-500/10 text-sky-300",
+                        "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition hover:bg-sky-500/10 hover:text-sky-600 dark:hover:text-sky-300",
+                        active && "bg-sky-500/10 text-sky-600 dark:text-sky-300",
                       )}
                     >
                       {item.label}
@@ -209,7 +219,7 @@ function HeaderContent() {
                 })}
               </div>
 
-              <SheetFooter className="gap-2 border-t border-border/60 bg-[#080f20]">
+              <SheetFooter className="gap-2 border-t border-border/60 bg-popover">
                 <Link
                   href="/sign-in"
                   onClick={() => setSheetOpen(false)}
