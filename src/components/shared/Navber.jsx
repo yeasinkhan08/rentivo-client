@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, Moon, Sun } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -86,6 +87,9 @@ function ThemeToggle({ className }) {
     localStorage.setItem("rentivo-theme", next);
     document.documentElement.classList.toggle("dark", next === "dark");
     document.documentElement.style.colorScheme = next;
+    window.dispatchEvent(
+      new CustomEvent("rentivo-theme-change", { detail: next })
+    );
     themeListeners.forEach((listener) => listener());
   };
 

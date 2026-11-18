@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 
 import Navber from "@/components/shared/Navber";
+import ToasterClient from "@/components/shared/ToasterClient";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInit}
         </Script>
+        <ToasterClient />
       </body>
     </html>
   );
