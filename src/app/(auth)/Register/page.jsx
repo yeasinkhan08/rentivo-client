@@ -1,7 +1,10 @@
-import React from "react";
+import SignUpForm from "@/components/auth/SignUpForm";
 
-const SignUpPage = () => {
-  return <div></div>;
+export const metadata = {
+  title: "Create account — RENTIVO",
+  description: "Create your Rentivo account.",
 };
 
-export default SignUpPage;
+export default function SignUpPage() {
+  return <SignUpForm />;
+}

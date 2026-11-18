@@ -1,7 +1,10 @@
-import React from "react";
+import AuthForm from "@/components/shared/AuthForm";
 
-const SignInPage = () => {
-  return <div></div>;
+export const metadata = {
+  title: "Sign in — RENTIVO",
+  description: "Sign in to your Rentivo account.",
 };
 
-export default SignInPage;
+export default function SignInPage() {
+  return <AuthForm mode="signin" />;
+}
