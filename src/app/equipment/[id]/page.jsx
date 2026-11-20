@@ -1,4 +1,5 @@
 "use client";
+import BookingModal from "@/components/shared/BookingModal";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -25,6 +26,7 @@ export default function EquipmentDetailsPage() {
   const [item, setItem] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState("");
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   useEffect(() => {
     if (isPending) return;
@@ -124,7 +126,13 @@ export default function EquipmentDetailsPage() {
 
           {role === "customer" && (
             <div className="mt-6 flex flex-wrap gap-3">
-              {/* the Book Now button is added in the booking step */}
+              <Button
+                disabled={!available}
+                onClick={() => setBookingOpen(true)}
+                className="bg-linear-to-r from-sky-500 to-blue-600 font-semibold text-white"
+              >
+                {available ? "Book Now" : "Unavailable"}
+              </Button>
               <Button variant="outline" onClick={toggleFavorite}>
                 {isFavorite ? "Remove from favorites" : "Add to favorites"}
               </Button>
@@ -139,6 +147,13 @@ export default function EquipmentDetailsPage() {
           {item.terms}
         </p>
       </div>
+      {role === "customer" && (
+        <BookingModal
+          item={item}
+          open={bookingOpen}
+          onOpenChange={setBookingOpen}
+        />
+      )}
     </div>
   );
 }
