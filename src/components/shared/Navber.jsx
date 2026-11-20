@@ -3,10 +3,10 @@
 import { Suspense, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, Moon, Sun } from "lucide-react";
 import { toast } from "sonner";
-
+import { usePathname, useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -88,7 +88,7 @@ function ThemeToggle({ className }) {
     document.documentElement.classList.toggle("dark", next === "dark");
     document.documentElement.style.colorScheme = next;
     window.dispatchEvent(
-      new CustomEvent("rentivo-theme-change", { detail: next })
+      new CustomEvent("rentivo-theme-change", { detail: next }),
     );
     themeListeners.forEach((listener) => listener());
   };
@@ -114,6 +114,62 @@ function ThemeToggle({ className }) {
   );
 }
 
+function AuthButtons({ mobile = false, onNavigate }) {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    onNavigate?.();
+    toast.success("Logged out successfully");
+    router.push("/");
+    router.refresh();
+  };
+
+  if (isPending) return null;
+
+  const outline = cn(
+    buttonVariants({ variant: mobile ? "outline" : "ghost" }),
+    mobile
+      ? "h-10 rounded-xl border-border/70 bg-transparent text-sm font-semibold"
+      : "h-9 rounded-lg px-3 text-sm font-medium text-muted-foreground hover:bg-sky-500/10 hover:text-sky-600 dark:hover:text-sky-300",
+  );
+  const filled = cn(
+    buttonVariants(),
+    "bg-linear-to-r from-sky-500 to-blue-600 text-sm font-semibold text-white transition hover:from-sky-400 hover:to-blue-500",
+    mobile
+      ? "h-10 rounded-xl"
+      : "h-9 rounded-lg px-4 shadow-md shadow-blue-950/30",
+  );
+
+  return (
+    <div
+      className={
+        mobile ? "flex flex-col gap-2" : "hidden items-center gap-2 sm:flex"
+      }
+    >
+      {session ? (
+        <>
+          <Link href="/dashboard" onClick={onNavigate} className={outline}>
+            Dashboard
+          </Link>
+          <Button type="button" onClick={handleLogout} className={filled}>
+            Logout
+          </Button>
+        </>
+      ) : (
+        <>
+          <Link href="/sign-in" onClick={onNavigate} className={outline}>
+            Login
+          </Link>
+          <Link href="/Register" onClick={onNavigate} className={filled}>
+            Register <ArrowUpRight className="size-4" />
+          </Link>
+        </>
+      )}
+    </div>
+  );
+}
 function HeaderContent() {
   const pathname = usePathname();
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -155,25 +211,8 @@ function HeaderContent() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          <Link
-            href="/sign-in"
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "hidden h-9 rounded-lg px-3 text-sm font-medium text-muted-foreground hover:bg-sky-500/10 hover:text-sky-600 dark:hover:text-sky-300 sm:inline-flex",
-            )}
-          >
-            Login
-          </Link>
-
-          <Link
-            href="/Register"
-            className={cn(
-              buttonVariants(),
-              "hidden h-9 rounded-lg bg-linear-to-r from-sky-500 to-blue-600 px-4 text-sm font-semibold text-white shadow-md shadow-blue-950/30 transition hover:from-sky-400 hover:to-blue-500 sm:inline-flex",
-            )}
-          >
-            Register <ArrowUpRight className="size-4" />
-          </Link>
+          {/* Step c: Login/Register or Dashboard/Logout (desktop) */}
+          <AuthButtons />
 
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger
@@ -213,7 +252,8 @@ function HeaderContent() {
                       onClick={() => setSheetOpen(false)}
                       className={cn(
                         "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition hover:bg-sky-500/10 hover:text-sky-600 dark:hover:text-sky-300",
-                        active && "bg-sky-500/10 text-sky-600 dark:text-sky-300",
+                        active &&
+                          "bg-sky-500/10 text-sky-600 dark:text-sky-300",
                       )}
                     >
                       {item.label}
@@ -224,26 +264,8 @@ function HeaderContent() {
               </div>
 
               <SheetFooter className="gap-2 border-t border-border/60 bg-popover">
-                <Link
-                  href="/sign-in"
-                  onClick={() => setSheetOpen(false)}
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "h-10 rounded-xl border-border/70 bg-transparent text-sm font-semibold",
-                  )}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/Register"
-                  onClick={() => setSheetOpen(false)}
-                  className={cn(
-                    buttonVariants(),
-                    "h-10 rounded-xl bg-linear-to-r from-sky-500 to-blue-600 text-sm font-semibold text-white",
-                  )}
-                >
-                  Register <ArrowUpRight className="size-4" />
-                </Link>
+                {/* Step d: Login/Register or Dashboard/Logout (mobile menu) */}
+                <AuthButtons mobile onNavigate={() => setSheetOpen(false)} />
               </SheetFooter>
             </SheetContent>
           </Sheet>
