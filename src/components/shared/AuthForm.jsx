@@ -224,6 +224,36 @@ export default function AuthForm({ mode = "signin", onSubmit }) {
           </div>
 
           {/* Form */}
+
+          {isSignUp && (
+            <div className="space-y-2">
+              <Label>Account type</Label>
+
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { value: "customer", label: "Customer", icon: "👤" },
+                  { value: "owner", label: "Owner", icon: "🏗️" },
+                  { value: "admin", label: "Admin", icon: "🛡️" },
+                ].map((role) => (
+                  <label key={role.value} className="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="role"
+                      value={role.value}
+                      defaultChecked={role.value === "customer"}
+                      className="peer sr-only"
+                    />
+
+                    <div className="rounded-xl border border-border/70 bg-muted/30 px-2 py-3 text-center text-xs font-medium text-muted-foreground transition hover:border-sky-500/50 peer-checked:border-sky-500 peer-checked:bg-sky-500/10 peer-checked:text-sky-500">
+                      <span className="mb-1 block text-lg">{role.icon}</span>
+                      {role.label}
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             {/* Full Name */}
             {isSignUp && (
@@ -247,18 +277,6 @@ export default function AuthForm({ mode = "signin", onSubmit }) {
               autoComplete="email"
               required
             />
-
-            {/* Phone */}
-            {isSignUp && (
-              <Field
-                id="phone"
-                label="Phone number"
-                type="tel"
-                placeholder="01XXXXXXXXX"
-                icon={Phone}
-                autoComplete="tel"
-              />
-            )}
 
             {/* Password */}
             <Field
