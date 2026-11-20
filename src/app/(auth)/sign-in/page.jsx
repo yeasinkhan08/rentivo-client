@@ -5,6 +5,7 @@ export const metadata = {
   description: "Sign in to your Rentivo account.",
 };
 
-export default function SignInPage() {
+export function SignInPage() {
   return <SignInForm />;
+  fault;
 }
