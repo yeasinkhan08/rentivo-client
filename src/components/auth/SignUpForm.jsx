@@ -1,34 +1,42 @@
-// src/components/auth/SignUpForm.jsx
 "use client";
 
+import { useRouter } from "next/navigation";
 import AuthForm from "@/components/shared/AuthForm";
 import { authClient } from "@/lib/auth-client";
 
-const ROLES = ["customer", "owner", "admin"]; // keep for a quick guard
+// at least one uppercase, one lowercase, minimum 6 characters
+const passwordRule = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
 export default function SignUpForm() {
+  const router = useRouter();
+
   const handleSignUp = async (data) => {
-    // ----- quick client‑side guard (optional) -----
-    if (!ROLES.includes(data.role)) {
-      throw new Error("Please select a valid account type.");
+    if (!passwordRule.test(data.password)) {
+      throw new Error(
+        "Password must have an uppercase letter, a lowercase letter and at least 6 characters.",
+      );
     }
 
-    // ----- send the selected role to Better Auth -----
-    const { data: signUpResponse, error } = await authClient.signUp.email({
+    const { error } = await authClient.signUp.email({
       name: data.name,
       email: data.email,
       password: data.password,
-      role: data.role, // ← this is the new field
-      callbackURL: "/",
+      image: data.image,
+      role: data.role,
     });
 
     if (error) {
-      console.error("Signup error:", error);
       throw new Error(error.message || "Signup failed.");
     }
 
-    console.log("Signup successful:", signUpResponse);
+    router.push("/");
+    router.refresh();
   };
 
-  return <AuthForm mode="signup" onSubmit={handleSignUp} />;
+  const handleGoogle = () =>
+    authClient.signIn.social({ provider: "google", callbackURL: "/" });
+
+  return (
+    <AuthForm mode="signup" onSubmit={handleSignUp} onGoogle={handleGoogle} />
+  );
 }
