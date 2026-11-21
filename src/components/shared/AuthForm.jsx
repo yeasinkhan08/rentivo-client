@@ -169,22 +169,22 @@ export default function AuthForm({ mode = "signin", onSubmit, onGoogle }) {
       <div className="relative z-10 w-full max-w-md">
         {/* Logo */}
         <div className="mb-6 flex justify-center">
-          <Image
-            src="/images/logo-light.png"
-            alt="Rentivo"
-            width={246}
-            height={76}
-            className="h-16 w-auto object-contain dark:hidden"
-          />
-          <Image
-            src="/images/logo.png"
-            alt="Rentivo"
-            aria-hidden="true"
-            width={246}
-            height={76}
-            className="hidden h-16 w-auto object-contain dark:block"
-          />
-        </div>
+        <Image
+          src="/images/logo-light.png"
+          alt="Rentivo"
+          width={246}
+          height={76}
+          className="h-16 w-auto object-contain dark:hidden"
+        />
+        <Image
+          src="/images/logo.png"
+          alt=""
+          aria-hidden="true"
+          width={246}
+          height={76}
+          className="h-16 w-auto object-contain hidden dark:block"
+        />
+      </div>
 
         {/* Auth Card */}
         <div className="rounded-2xl border border-border/70 bg-card/90 p-6 shadow-2xl shadow-blue-950/20 backdrop-blur sm:p-8">
