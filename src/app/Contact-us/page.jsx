@@ -12,8 +12,8 @@ import SectionHeading from "@/components/home/SectionHeading";
 
 // replace these with your real contact details
 const contactInfo = [
-  { icon: Mail, title: "Email", text: "support@rentivo.com" },
-  { icon: Phone, title: "Phone", text: "+880 1XXX-XXXXXX" },
+  { icon: Mail, title: "Email", text: "kyeasin58@gmail.com" },
+  { icon: Phone, title: "Phone", text: "+880 1781775704" },
   { icon: MapPin, title: "Address", text: "Dhaka, Bangladesh" },
   { icon: Clock, title: "Support hours", text: "Sat - Thu, 9:00 AM - 6:00 PM" },
 ];
