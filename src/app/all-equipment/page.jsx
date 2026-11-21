@@ -32,6 +32,15 @@ export default function AllEquipmentPage() {
   const [result, setResult] = useState({ items: [], total: 0, pages: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  // read ?category=... from the link on the home page
+  useEffect(() => {
+    const category = new URLSearchParams(window.location.search).get(
+      "category",
+    );
+    if (category) {
+      setFilters((current) => ({ ...current, category }));
+    }
+  }, []);
 
   useEffect(() => {
     let ignore = false;
