@@ -1,6 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, Clock3, PlayCircle, ShieldCheck, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Clock3,
+  PlayCircle,
+  ShieldCheck,
+  Star,
+} from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -63,7 +73,12 @@ export default function Hero() {
       />
 
       <div className="mx-auto flex min-h-[36rem] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:min-h-[40rem] lg:px-8">
-        <div className="max-w-2xl">
+        <motion.div
+          className="max-w-2xl"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
           <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1.5 text-xs font-semibold text-sky-700 dark:text-sky-300">
             <span className="relative flex size-2">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-sky-400 opacity-75" />
@@ -81,9 +96,9 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
-            Rentivo connects contractors and teams with trusted construction
-            equipment. Browse, compare and book the tools you need in minutes —
-            with flexible rates and reliable support.
+            Rentivo connects equipment owners with customers. Browse, compare
+            and book the tools you need in minutes, with flexible rates and
+            secure online payments.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -91,7 +106,7 @@ export default function Hero() {
               href="/all-equipment"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "h-11 rounded-xl bg-linear-to-r from-sky-500 to-blue-600 px-5 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:from-sky-400 hover:to-blue-500"
+                "h-11 rounded-xl bg-linear-to-r from-sky-500 to-blue-600 px-5 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:from-sky-400 hover:to-blue-500",
               )}
             >
               Browse equipment <ArrowRight className="size-4" />
@@ -100,7 +115,7 @@ export default function Hero() {
               href="/how-it-works"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "h-11 rounded-xl border-border/70 bg-background/40 px-5 text-sm font-semibold"
+                "h-11 rounded-xl border-border/70 bg-background/40 px-5 text-sm font-semibold",
               )}
             >
               <PlayCircle className="size-4" /> See how it works
@@ -114,13 +129,15 @@ export default function Hero() {
                   <Icon className="size-4" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">{title}</p>
+                  <p className="text-sm font-semibold text-foreground">
+                    {title}
+                  </p>
                   <p className="text-xs text-muted-foreground">{description}</p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <div className="absolute top-5 right-5 z-10 hidden items-center gap-2 rounded-full border border-white/15 bg-[#071227]/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md sm:inline-flex">
@@ -128,25 +145,31 @@ export default function Hero() {
         Available today
       </div>
 
-      <div className="absolute right-5 bottom-6 z-10 hidden max-w-sm items-center justify-between gap-4 rounded-2xl border border-white/15 bg-[#071227]/75 p-4 backdrop-blur-md lg:flex">
+      <motion.div
+        className="absolute right-5 bottom-6 z-10 hidden max-w-sm items-center justify-between gap-4 rounded-2xl border border-white/15 bg-[#071227]/75 p-4 backdrop-blur-md lg:flex"
+        initial={{ opacity: 0, x: 40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7, delay: 0.4 }}
+      >
         <div className="flex items-center gap-3">
           <span className="flex size-10 items-center justify-center rounded-xl bg-sky-500/20 text-sky-300">
             <BadgeCheck className="size-5" />
           </span>
           <div>
             <p className="text-sm font-semibold text-white">
-              Trusted by 2,000+ teams
+              Trusted equipment owners
             </p>
-            <p className="text-xs text-slate-300">Verified renters &amp; suppliers</p>
+            <p className="text-xs text-slate-300">
+              Verified renters &amp; suppliers
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-1 text-amber-300">
           {Array.from({ length: 5 }).map((_, index) => (
             <Star key={index} className="size-3.5 fill-current" />
           ))}
-          <span className="ml-1 text-xs font-semibold text-white">4.9</span>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
