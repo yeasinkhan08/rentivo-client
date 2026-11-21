@@ -2,6 +2,13 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
+if (!process.env.MONGO_DB_URI) {
+  throw new Error(
+    "Missing environment variable: MONGO_DB_URI. " +
+      "Create a .env file at the project root and add MONGO_DB_URI=mongodb://..."
+  );
+}
+
 const client = new MongoClient(process.env.MONGO_DB_URI);
 const db = client.db("RENTIVO");
 
