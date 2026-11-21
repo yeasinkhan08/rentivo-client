@@ -26,7 +26,7 @@ const navItems = [
   { label: "How it work", href: "/how-it-works" },
 ];
 
-function Logo({ className = "h-9" }) {
+function Logo({ className = "h-12" }) {
   const baseClass = "w-auto object-contain select-none";
 
   return (

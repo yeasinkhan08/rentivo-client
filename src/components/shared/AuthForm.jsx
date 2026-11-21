@@ -174,7 +174,7 @@ export default function AuthForm({ mode = "signin", onSubmit, onGoogle }) {
             alt="Rentivo"
             width={246}
             height={76}
-            className="h-12 w-auto object-contain dark:hidden"
+            className="h-16 w-auto object-contain dark:hidden"
           />
           <Image
             src="/images/logo.png"
@@ -182,7 +182,7 @@ export default function AuthForm({ mode = "signin", onSubmit, onGoogle }) {
             aria-hidden="true"
             width={246}
             height={76}
-            className="hidden h-12 w-auto object-contain dark:block"
+            className="hidden h-16 w-auto object-contain dark:block"
           />
         </div>
 
