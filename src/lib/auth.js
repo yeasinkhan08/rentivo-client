@@ -15,6 +15,10 @@ export const auth = betterAuth({
       address: { type: "string", required: false },
     },
   },
+  session: {
+    expiresIn: 60 * 60 * 24 * 30,
+    updateAge: 60 * 60 * 24,
+  },
   databaseHooks: {
     user: {
       create: {
@@ -22,6 +26,15 @@ export const auth = betterAuth({
         before: async (user) => ({
           data: { ...user, role: user.role === "owner" ? "owner" : "customer" },
         }),
+      },
+      update: {
+        // roles are only changed by an admin through our Express server
+        before: async (user) => {
+          if (user.role !== undefined) {
+            throw new Error("Role cannot be changed here");
+          }
+          return { data: user };
+        },
       },
     },
   },

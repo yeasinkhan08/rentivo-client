@@ -29,14 +29,24 @@ export async function apiFetch(path, options = {}) {
 
 // upload an image to imgbb and return its URL
 export async function uploadImage(file) {
+  const key = process.env.NEXT_PUBLIC_IMGBB_KEY;
+  if (!key) {
+    throw new Error(
+      "imgbb API key is missing. Add NEXT_PUBLIC_IMGBB_KEY to .env and restart.",
+    );
+  }
+
   const body = new FormData();
   body.append("image", file);
 
-  const res = await fetch(
-    `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_KEY}`,
-    { method: "POST", body },
-  );
-  const json = await res.json();
-  if (!json.success) throw new Error("Image upload failed");
+  const res = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
+    method: "POST",
+    body,
+  });
+  const json = await res.json().catch(() => null);
+
+  if (!json?.success) {
+    throw new Error(json?.error?.message || "Image upload failed");
+  }
   return json.data.url;
 }
