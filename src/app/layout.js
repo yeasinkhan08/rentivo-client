@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Navber from "@/components/shared/Navber";
 import ToasterClient from "@/components/shared/ToasterClient";
+import Footer from "@/components/shared/Footer";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Navber />
         {children}
+        <Footer />
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInit}
         </Script>
